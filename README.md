@@ -17,25 +17,26 @@ ETGTAB requires the user to specify location parameters (coordinates, local grav
 
 ```Python
 Location = {
-  'Latitude':  45.9500,  ## Latitude  (deg North)
-  'Longitude': 66.6411,  ## Longitude (deg East)
-  'Elevation': 45.,      ## Elevation above sea level (m)
+  'Latitude':  45.9500,            ## Latitude  (deg North)
+  'Longitude': 66.6411,            ## Longitude (deg East)
+  'Elevation': 45.,                ## Elevation above sea level (m)
   'Gravity':   9.8067624,	         ## Local gravity (m/s^2)
   'Timezone':  'Canada/Atlantic',	 ## Local timezone (e.g. 'Europe/Paris', 'Canada/Atlantic', 'UTC', see pytz.common_timezones)
   'City':      'Fredericton, NB',	 ## City description
 }
 
-# Allowed tidal components: 'Tidal_Potential', 'Vertical_Acceleration', 'Horizontal_Acceleration', 'Vertical_Displacement',
-# 'Horizontal_Displacement', 'Vertical_Strain', 'Horizontal_Strain', 'Areal_Strain', 'Shear_Strain', 'Volume_Strain', 'Ocean_Tides'
+## Allowed tidal components: 'Tidal_Potential', 'Vertical_Acceleration', 'Horizontal_Acceleration',
+## 'Vertical_Displacement', 'Horizontal_Displacement', 'Vertical_Strain', 'Horizontal_Strain', 'Areal_Strain',
+## 'Shear_Strain', 'Volume_Strain', 'Ocean_Tides'
 TidePars = {
-  'Azimuth':		0.,						    ## [deg]
-  'TidalComps':	['Vertical_Acceleration', 'Vertical_Displacement'], ## List of tidal components to compute.
-  'PrintLevel':	'None',           ## 'None', 'Some', 'All'
-  'TimeStart':	[2024, 8, 1, 0],  ## [YYYY,MM,DD,HH] in UTC timezone
-  'TimeSpan':		24*31,            ## [hrs]
-  'TimeStep':		3600,             ## [s] (300 or 3600 only)
-  'TidalModel':	'Tamura1987',     ## 'Doodson1921', 'CTE1973', 'Tamura1987', 'Buellesfeld1985'
-  'EarthModel':	'Elastic'         ## 'Rigid', 'Elastic'
+  'Azimuth':    0.,						    ## [deg]
+  'TidalComps': ['Vertical_Acceleration', 'Vertical_Displacement'], ## List of tidal components to compute.
+  'PrintLevel': 'None',           ## 'None', 'Some', 'All'
+  'TimeStart':  [2024, 8, 1, 0],  ## [YYYY,MM,DD,HH] in UTC timezone
+  'TimeSpan':   24*31,            ## [hrs]
+  'TimeStep':   3600,             ## [s] (300 or 3600 only)
+  'TidalModel': 'Tamura1987',     ## 'Doodson1921', 'CTE1973', 'Tamura1987', 'Buellesfeld1985'
+  'EarthModel': 'Elastic'         ## 'Rigid', 'Elastic'
 }
 
 ETG_TimeSeries('Example', Location, TidePars)
