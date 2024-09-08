@@ -40,6 +40,6 @@ ETG_TimeSeries('Example', Location, TidePars)
 ```
 
 - This produces the following output:
-![ETG_Example_TimeSeries](https://github.com/user-attachments/assets/7faaff06-0a32-44ec-8fd8-67f57ac2dff5)
+![Example ETG time series in Fredericton, NB for August 1-31 2024](/Figures/ETG_Example_TimeSeries.jpeg)
 
 - Allowed tidal components: 'Tidal_Potential', 'Vertical_Acceleration', 'Horizontal_Acceleration', 'Vertical_Displacement', 'Horizontal_Displacement', 'Vertical_Strain', 'Horizontal_Strain', 'Areal_Strain', 'Shear_Strain', 'Volume_Strain', 'Ocean_Tides'
