@@ -8,8 +8,12 @@ ETGTAB and PREDICT were originally written in FORTRAN by the late Prof. H.-G. We
 
 ## Description
 
-- ETGTAB_Class.py: contains class definition for the Python wrapper and several utility functions.
-- ETGTAB_Main.py: main the entry point for generating model output.
+- `ETGTAB_Class.py`: contains class definition for the Python wrapper and several utility functions.
+  - `class EarthTidalGravity`: Class definition for Earth tidal gravity model
+  - `__init__()`: Initializes class attributes.
+  - `Export_Model_Parameters()`: Exports model parameters to files.
+  - `Import_Model_Parameters()`: Import model parameters from files.
+- `ETGTAB_Main.py`: main the entry point for generating model output.
 
 ## Basic usage
 
