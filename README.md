@@ -13,7 +13,7 @@ ETGTAB and PREDICT were originally written in FORTRAN by the late Prof. H.-G. We
 
 ## Basic usage
 
-ETGTAB requires the user to specify location parameters (coordinates, local gravity, timezone, etc) and tide model parameters (tide components, time intervals, potential model, etc). The code separates these into dictionaries `Location` and `TidePars` to allow for simple comparisons between locations or tide models. A basic example is shown below
+- ETGTAB requires the user to specify location parameters (coordinates, local gravity, timezone, etc) and tide model parameters (tide components, time intervals, potential model, etc). The code separates these into dictionaries `Location` and `TidePars` to allow for simple comparisons between locations or tide models. A basic example is shown below:
 
 ```Python
 Location = {
@@ -25,9 +25,6 @@ Location = {
   'City':      'Fredericton, NB', ## City description
 }
 
-## Allowed tidal components: 'Tidal_Potential', 'Vertical_Acceleration', 'Horizontal_Acceleration',
-## 'Vertical_Displacement', 'Horizontal_Displacement', 'Vertical_Strain', 'Horizontal_Strain', 'Areal_Strain',
-## 'Shear_Strain', 'Volume_Strain', 'Ocean_Tides'
 TidePars = {
   'Azimuth':    0.,              ## [deg]
   'TidalComps': ['Vertical_Acceleration', 'Vertical_Displacement'], ## List of tidal components to compute.
@@ -41,3 +38,8 @@ TidePars = {
 
 ETG_TimeSeries('Example', Location, TidePars)
 ```
+
+- This produces the following output:
+![ETG_Example_TimeSeries](https://github.com/user-attachments/assets/7faaff06-0a32-44ec-8fd8-67f57ac2dff5)
+
+- Allowed tidal components: 'Tidal_Potential', 'Vertical_Acceleration', 'Horizontal_Acceleration', 'Vertical_Displacement', 'Horizontal_Displacement', 'Vertical_Strain', 'Horizontal_Strain', 'Areal_Strain', 'Shear_Strain', 'Volume_Strain', 'Ocean_Tides'
