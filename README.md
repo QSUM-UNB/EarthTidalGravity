@@ -17,9 +17,9 @@ ETGTAB requires the user to specify location parameters (coordinates, local grav
 
 ```Python
 Location = {
-  'Latitude':  45.9500,            ## Latitude  (deg North)
-  'Longitude': 66.6411,	           ## Longitude (deg East)
-  'Elevation': 45.,			           ## Elevation above sea level (m)
+  'Latitude':  45.9500,  ## Latitude  (deg North)
+  'Longitude': 66.6411,  ## Longitude (deg East)
+  'Elevation': 45.,      ## Elevation above sea level (m)
   'Gravity':   9.8067624,	         ## Local gravity (m/s^2)
   'Timezone':  'Canada/Atlantic',	 ## Local timezone (e.g. 'Europe/Paris', 'Canada/Atlantic', 'UTC', see pytz.common_timezones)
   'City':      'Fredericton, NB',	 ## City description
