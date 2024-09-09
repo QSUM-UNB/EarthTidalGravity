@@ -6,30 +6,13 @@ ETGTAB computes Earth tide components (tidal potential, acceleration, tilt, disp
 Note that ETGTAB has been superseeded by PREDICT - a module in the ETERNA software package (version 3.4).
 ETGTAB and PREDICT were originally written in FORTRAN by the late Prof. H.-G. Wenzel, Geodetic Institute, Karlsruhe University.
 
-## Description
-
-- `ETGTAB_Class.py`: contains the Python wrapper for ETGTAB, sets default plot options, configures the logger, and defines the class `EarthTidalGravity`. The class has the following methods:
-  - `__init__()`: Initializes class attributes.
-  - `Export_Model_Parameters()`: Exports model parameters to files.
-  - `Import_Model_Parameters()`: Import model parameters from files.
-  - `Parse_Tidal_Components()`: Parses current tidal component from list and assigns ETGTAB index, plot labels, and units.
-  - `Write_Input_File()`: Write ETGTAB input parameters to a formatted file.
-  - `Run_ETGTAB()`: Python wrapper for ETGTAB. This method overwrites the input file, deletes any existing raw output file, and runs the ETGTAB executable as a subprocess. It then reads the new raw output file.
-  - `Read_Raw_Output_File()`: Read raw ETGTAB output into a dataframe.
-  - `Move_Raw_Output_File()`: Move and rename raw ETGTAB output file into 'Output' directory.
-  - `Write_CSV_File()`: Write dataframe to CSV file.
-  - `Read_CSV_File()`: Read CSV file into dataframe.
-  - `Generate_Model_Output()`: Generate Earth tidal gravity model output in the form of raw text files and a CSV file in the Output folder.
-  - `Plot_Tidal_Component()`: Plot output from the ETGTAB computation.
-  - `Plot_All_Tidal_Components()`: Plot all Earth tidal model components stored in data frame.
-
-- `ETGTAB_Main.py`: main the entry point for generating model output.
-
 ## Basic usage
 
 - ETGTAB requires the user to specify location parameters (coordinates, local gravity, timezone, etc) and tide model parameters (tide components, time intervals, potential model, etc). The code separates these into dictionaries `Location` and `TidePars` to allow for simple comparisons between locations or tide models. A basic example is shown below:
 
 ```Python
+import ETGTAB_Class as ETG
+
 Location = {
   'Latitude':  45.9500,           ## Latitude  (deg North)
   'Longitude': 66.6411,           ## Longitude (deg East)
@@ -50,10 +33,35 @@ TidePars = {
   'EarthModel': 'Elastic'        ## 'Rigid', 'Elastic'
 }
 
-ETG_TimeSeries('Example', Location, TidePars)
+model = ETG.EarthTidalGravity('Example', Location, TidePars)
+model.Generate_Model_Output()
+model.Plot_All_Tidal_Components(colors=['crimson', 'royalblue', 'forestgreen'], linestyle='-', marker='', autotitle=True)
 ```
 
 - This produces the following output:
 ![Example ETG time series in Fredericton, NB for August 1-31 2024](/Figures/ETG_Example_TimeSeries.jpeg)
 
 - Allowed tidal components: 'Tidal_Potential', 'Vertical_Acceleration', 'Horizontal_Acceleration', 'Vertical_Displacement', 'Horizontal_Displacement', 'Vertical_Strain', 'Horizontal_Strain', 'Areal_Strain', 'Shear_Strain', 'Volume_Strain', 'Ocean_Tides'
+
+## File Descriptions
+
+- `ETGTAB_Class.py`: contains the Python wrapper for ETGTAB, sets default plot options, configures the logger, and defines the class `EarthTidalGravity`. The class has the following methods:
+  - `__init__()`: Initializes class attributes.
+  - `Export_Model_Parameters()`: Exports model parameters to files.
+  - `Import_Model_Parameters()`: Import model parameters from files.
+  - `Parse_Tidal_Components()`: Parses current tidal component from list and assigns ETGTAB index, plot labels, and units.
+  - `Write_Input_File()`: Write ETGTAB input parameters to a formatted file.
+  - `Run_ETGTAB()`: Python wrapper for ETGTAB. This method overwrites the input file, deletes any existing raw output file, and runs the ETGTAB executable as a subprocess. It then reads the new raw output file.
+  - `Read_Raw_Output_File()`: Read raw ETGTAB output into a dataframe.
+  - `Move_Raw_Output_File()`: Move and rename raw ETGTAB output file into 'Output' directory.
+  - `Write_CSV_File()`: Write dataframe to CSV file.
+  - `Read_CSV_File()`: Read CSV file into dataframe.
+  - `Generate_Model_Output()`: Generate Earth tidal gravity model output in the form of raw text files and a CSV file in the Output folder.
+  - `Plot_Tidal_Component()`: Plot output from the ETGTAB computation.
+  - `Plot_All_Tidal_Components()`: Plot all Earth tidal model components stored in data frame.
+
+- `ETGTAB_Main.py`: main the entry point for generating model output.
+  - `ETG_TimeSeries()`: Generate time series of tidal components at one location and plot the result.
+  - `ETG_Compare_Locations()`: Compare time series of tidal component at two locations.
+  - `ETG_Interpolate()`: Compute tidal gravity anomaly at times specified by a list of timestamps. Here, ETGTAB is used to compute the veritical tidal gravity on a grid with 300 s resolution. Then an interpolant is used to predict values between these grid points at times in the list.
+  - `ETG_Interpolate_Example()`: Example implementation of ETG_Interpolate().
