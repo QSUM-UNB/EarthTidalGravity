@@ -1,9 +1,9 @@
 #####################################################################
 ## Filename:	ETGTAB_Class.py
 ## Author:		B. Barrett
-## Description: Python wrapper for the ETGTAB program to predict Earth tidal gravity parameters
+## Description: Class definition for EarthTidalGravity
 ## Version:		1.0.0
-## Last Mod:	02/09/2024
+## Last Mod:	08/09/2024
 #####################################################################
 
 import datetime as dt
@@ -275,7 +275,7 @@ class EarthTidalGravity:
 	#################################################################
 
 	def Write_Input_File(self, iTC):
-		"""Write input parameters to file."""
+		"""Write ETGTAB input parameters to a formatted file."""
 
 		##===========================================================
 		## Sample input for ETGTAB:
@@ -332,7 +332,10 @@ class EarthTidalGravity:
 	#################################################################
 
 	def Run_ETGTAB(self, iTC, ReExecute=True):
-		"""Execute ETGTAB tidal gravity anomaly software."""
+		"""Python wrapper for ETGTAB.
+		If ReExecute is True, this method overwrites the input file, deletes any existing
+		raw output file, and runs the ETGTAB executable as a subprocess.
+		It then reads the new raw output file."""
 
 		if ReExecute:
 			self.Write_Input_File(iTC)
@@ -414,7 +417,7 @@ class EarthTidalGravity:
 	#################################################################
 
 	def Read_CSV_File(self):
-		"""Write dataframe to CSV file."""
+		"""Read CSV file into dataframe."""
 
 		## Output path for CSV file
 		path = os.path.join(self.OutputPath, self.OutputFile+'.csv')
@@ -550,4 +553,3 @@ class EarthTidalGravity:
 
 if __name__ == '__main__':
 	pass
-
