@@ -1,12 +1,9 @@
 #####################################################################
 ## Filename:	ETGTAB_Main.py
 ## Author:		B. Barrett
-## Description: Python wrapper for the ETGTAB program to predict tidal gravity accelerations.
-##   ETGTAB has been superseeded by PREDICT - a module in the ETERNA software package.
-##   It allows one to compute the tidal response of an elastic Earth anywhere on its surface.
-##   ETGTAB and PREDICT were written in FORTRAN77 by late Prof. H.-G Wenzel, Geodetic Institute, Karlsruhe University.
+## Description: Python wrapper for the ETGTAB program to predict Earth tidal gravity components.
 ## Version:		1.0.0
-## Last Mod:	02/09/2024
+## Last Mod:	08/09/2024
 #####################################################################
 
 import datetime as dt
@@ -21,9 +18,8 @@ import ETGTAB_Class as ETG
 #################################################################
 #################################################################
 
-def ETG_TimeSeries(Prefix, Location, TidePars):
-	"""Example implementation of ETGTAB.
-	Generate time series of tidal components at one location and plot the resulting time series.
+def ETG_Time_Series(Prefix, Location, TidePars):
+	"""Generate time series of tidal components at one location and plot the result.
 	ARGUMENTS:
 	  Prefix   (str)  - File prefix for storing ETGTAB output.
  	  Location (dict) - Contains location parameters.
@@ -34,7 +30,7 @@ def ETG_TimeSeries(Prefix, Location, TidePars):
 	model.Generate_Model_Output()
 	model.Plot_All_Tidal_Components(colors=['crimson', 'royalblue', 'forestgreen'], linestyle='-', marker='', autotitle=True)
 
-#################### End of ETG_TimeSeries() ####################
+################### End of ETG_Time_Series() ####################
 #################################################################
 
 def ETG_Compare_Locations(Prefix1, Location1, Prefix2, Location2, TidePars):
@@ -82,12 +78,12 @@ def ETG_Compare_Locations(Prefix1, Location1, Prefix2, Location2, TidePars):
 #################################################################
 
 def ETG_Interpolate(Location, tList, ReExecute=False):
-	"""Compute tidal gravity anomaly in m/s^2 at specific times given by tList.
-	Here, ETGTAB is used to compute the veritical tidal component of gravity on a grid with 300 s resolution.
+	"""Compute tidal gravity anomaly at specific times given by tList.
+	Here, ETGTAB is used to compute the veritical tidal gravity component on a grid with 300 s resolution.
 	Then an interpolant is used to predict values between these grid points at the times in tList.
 	ARGUMENTS:
 	  Location  (dict) - Contains location parameters at which to compute tidal model.
-  	  tList     (list) - List of timestamps (in seconds since epoch 01/01/1970) at which to compute vertical acceleration component.
+  	  tList     (list) - List of ordered timestamps (in seconds since epoch 01/01/1970) at which to compute tidal component.
 	  ReExecute (bool) - Flag for recomputing tides for new times or location.
 	"""
 
@@ -201,9 +197,9 @@ if __name__ == '__main__':
 		'EarthModel':	'Elastic'				## 'Rigid', 'Elastic'
 	}
 
-	ETG_TimeSeries('UNB_FR', Location1, TidePars)
-	# ETG_TimeSeries('UNB_SJ', Location2, TidePars)
-	# ETG_TimeSeries('YorkU', Location3, TidePars)
+	ETG_Time_Series('UNB_FR', Location1, TidePars)
+	# ETG_Time_Series('UNB_SJ', Location2, TidePars)
+	# ETG_Time_Series('YorkU', Location3, TidePars)
 
 	# ETG_Compare_Locations('UNB_FR', Location1, 'UNB_SJ', Location2, TidePars)
 
