@@ -38,10 +38,12 @@ model.Generate_Model_Output()
 model.Plot_All_Tidal_Components(colors=['crimson', 'royalblue', 'forestgreen'], linestyle='-', marker='', autotitle=True)
 ```
 
-- This produces the following output:
+- Possible tidal components are: 'Tidal_Potential', 'Vertical_Acceleration', 'Horizontal_Acceleration', 'Vertical_Displacement', 'Horizontal_Displacement', 'Vertical_Strain', 'Horizontal_Strain', 'Areal_Strain', 'Shear_Strain', 'Volume_Strain', 'Ocean_Tides'
+
+ - This code produces the following plot:
 ![Example ETG time series in Fredericton, NB for August 1-31 2024](/Figures/ETG_Example_TimeSeries.jpeg)
 
-- Allowed tidal components: 'Tidal_Potential', 'Vertical_Acceleration', 'Horizontal_Acceleration', 'Vertical_Displacement', 'Horizontal_Displacement', 'Vertical_Strain', 'Horizontal_Strain', 'Areal_Strain', 'Shear_Strain', 'Volume_Strain', 'Ocean_Tides'
+- In the folder `Output`, this code produces a CSV file called `Example.csv` containing all requested tidal components, along with copies of the dictionaries `Location` and `TidePars` in json format called `Example_Location.json` and `Example_TidePars.json`.
 
 ## File Descriptions
 
