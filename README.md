@@ -8,10 +8,13 @@ ETGTAB and PREDICT were originally written in FORTRAN by the late Prof. H.-G. We
 
 ## Basic usage
 
-- ETGTAB requires the user to specify location parameters (coordinates, local gravity, timezone, etc) and tide model parameters (tide components, time intervals, potential model, etc). The code separates these into dictionaries `Location` and `TidePars` to allow for simple comparisons between locations or tide models. A basic example is shown below:
+- The user specifies location parameters (coordinates, local gravity, timezone, etc) and tide model parameters (tide components, time intervals, potential model, etc). The code separates these parameters into dictionaries `Location` and `TidePars` to allow for simple comparisons between locations or tide models. A basic example is shown below:
 
 ```Python
-import ETGTAB_Class as ETG
+from ETGTAB import *
+
+etg   = Earth_Tidal_Gravity
+utils = Utilities
 
 Location = {
   'Latitude':  45.9500,           ## Latitude  (deg North)
@@ -33,9 +36,7 @@ TidePars = {
   'EarthModel': 'Elastic'        ## 'Rigid', 'Elastic'
 }
 
-model = ETG.EarthTidalGravity('Example', Location, TidePars)
-model.Generate_Model_Output()
-model.Plot_All_Tidal_Components(colors=['crimson', 'royalblue', 'forestgreen'], linestyle='-', marker='', autotitle=True)
+utils.Time_Series('Example', Location, TidePars)
 ```
 
 - Possible tidal components are: 'Tidal_Potential', 'Vertical_Acceleration', 'Horizontal_Acceleration', 'Vertical_Displacement', 'Horizontal_Displacement', 'Vertical_Strain', 'Horizontal_Strain', 'Areal_Strain', 'Shear_Strain', 'Volume_Strain', 'Ocean_Tides'
@@ -47,7 +48,9 @@ model.Plot_All_Tidal_Components(colors=['crimson', 'royalblue', 'forestgreen'], 
 
 ## File Descriptions
 
-- `ETGTAB_Class.py`: contains the Python wrapper for ETGTAB, sets default plot options, configures the logger, and defines the class `EarthTidalGravity`. The class has the following methods:
+- `Main.py`: main the entry point for generating model output.
+
+- `ETGTAB/Earth_Tidal_Gravity.py`: contains the Python wrapper for ETGTAB, sets default plot options, configures the logger, and defines the class `EarthTidalGravity`. The class has the following methods:
   - `__init__()`: Initializes class attributes.
   - `Export_Model_Parameters()`: Exports model parameters to files.
   - `Import_Model_Parameters()`: Import model parameters from files.
@@ -62,8 +65,8 @@ model.Plot_All_Tidal_Components(colors=['crimson', 'royalblue', 'forestgreen'], 
   - `Plot_Tidal_Component()`: Plot output from the ETGTAB computation.
   - `Plot_All_Tidal_Components()`: Plot all Earth tidal model components stored in data frame.
 
-- `ETGTAB_Main.py`: main the entry point for generating model output.
-  - `ETG_TimeSeries()`: Generate time series of tidal components at one location and plot the result.
-  - `ETG_Compare_Locations()`: Compare time series of tidal component at two locations.
-  - `ETG_Interpolate()`: Compute tidal gravity anomaly at times specified by a list of timestamps. Here, ETGTAB is used to compute the veritical tidal gravity on a grid with 300 s resolution. Then an interpolant is used to predict values between these grid points at times in the list.
-  - `ETG_Interpolate_Example()`: Example implementation of ETG_Interpolate().
+- `ETGTAB/Utilities.py`: Utilities and helper functions that manipulate Earth tidal gravity data.
+  - `TimeSeries()`: Generate time series of tidal components at one location and plot the result.
+  - `Compare_Locations()`: Compare time series of tidal component at two locations.
+  - `Interpolate()`: Compute tidal gravity anomaly at times specified by a list of timestamps. Here, ETGTAB is used to compute the veritical tidal gravity on a grid with 300 s resolution. Then an interpolant is used to predict values between these grid points at times in the list.
+  - `Interpolate_Example()`: Example implementation of ETG_Interpolate().
