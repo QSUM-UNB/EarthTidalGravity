@@ -1,0 +1,38 @@
+Ellipsoidal latitude  in degree:            45.950
+Ellipsoidal longitude in degree:            66.641
+Ellipsoidal height in meter:                45.000
+Gravity in m/s**2:                           9.807
+Azimuth in degree clockwise from north:      0.000
+Earth tide component (-1...9):                   2
+Printout of tidal potential (0...2):             0
+Initial epoch(YYMMDDHH):                      2024   08   01   00
+Number of hours:                               744
+Time interval in secs:                        3600
+Tidal potential (0...3):                         2
+Tides for a rigid Earth (IRIGID=1):              0
+ Gravimetric tides for Black Forest Observatory
+ Parameters from LaCoste Romberg G249F
+  120 days (8.12.1988 - 11.4.1989)
+
+
+
+
+
+
+
+14
+    1  285 LONG       1.1500    0.0000
+  286  428 Q1         1.1429   -0.3299
+  429  488 O1         1.1464    0.0791
+  489  537 M1         1.1537    0.0583
+  538  592 P1K1       1.1349    0.3174
+  593  634 J1         1.1537   -0.0078
+  635  739 OO1        1.1538   -0.0531
+  740  839 2N2        1.1560    2.5999
+  840  890 N2         1.1761    2.5446
+  891  947 M2         1.1840    2.0816
+  948  987 L2         1.1906    0.1735
+  988 1121 S2K2       1.1865    0.6230
+ 1122 1204 M3         1.0584   -0.0814
+ 1205 1214 M4         0.5777   92.2440
+ 
