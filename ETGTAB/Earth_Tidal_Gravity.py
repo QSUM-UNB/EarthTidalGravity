@@ -1,9 +1,9 @@
 #####################################################################
-## Filename:	ETGTAB_Class.py
+## Filename:	Earth_Tidal_Gravity.py
 ## Author:		B. Barrett
 ## Description: Class definition for EarthTidalGravity
-## Version:		1.0.0
-## Last Mod:	08/09/2024
+## Version:		1.1.0
+## Last Mod:	30/11/2024
 #####################################################################
 
 import datetime as dt

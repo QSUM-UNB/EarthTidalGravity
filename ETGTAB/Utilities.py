@@ -1,9 +1,9 @@
 #####################################################################
-## Filename:	ETGTAB_Main.py
+## Filename:	Utilities.py
 ## Author:		B. Barrett
-## Description: Python wrapper for the ETGTAB program to predict Earth tidal gravity components.
-## Version:		1.0.0
-## Last Mod:	08/09/2024
+## Description: Utility functions for Earth tidal gravity program.
+## Version:		1.1.0
+## Last Mod:	30/11/2024
 #####################################################################
 
 import datetime as dt
@@ -13,12 +13,15 @@ import pytz
 
 from scipy.interpolate import interp1d
 
-import ETGTAB_Class as ETG
+if __name__ == '__main__':
+	from Earth_Tidal_Gravity import EarthTidalGravity
+else:
+	from .Earth_Tidal_Gravity import EarthTidalGravity
 
 #################################################################
 #################################################################
 
-def ETG_Time_Series(Prefix, Location, TidePars):
+def Time_Series(Prefix, Location, TidePars):
 	"""Generate time series of tidal components at one location and plot the result.
 	ARGUMENTS:
 	  Prefix   (str)  - File prefix for storing ETGTAB output.
@@ -26,14 +29,14 @@ def ETG_Time_Series(Prefix, Location, TidePars):
 	  TidePars (dict) - Contains ETGTAB model parameters.
 	"""
 
-	model = ETG.EarthTidalGravity(Prefix, Location, TidePars)
+	model = EarthTidalGravity(Prefix, Location, TidePars)
 	model.Generate_Model_Output()
 	model.Plot_All_Tidal_Components(colors=['crimson', 'royalblue', 'forestgreen'], linestyle='-', marker='', autotitle=True)
 
-################### End of ETG_Time_Series() ####################
+##################### End of Time_Series() ######################
 #################################################################
 
-def ETG_Compare_Locations(Prefix1, Location1, Prefix2, Location2, TidePars):
+def Compare_Locations(Prefix1, Location1, Prefix2, Location2, TidePars):
 	"""Compare time series of ETGTAB output at two locations.
 	CSV files with Prefix1 and Prefix2 should must exist in the Output folder.
 	The code loads model data from these CSV files and plots the results for comparison.
@@ -43,10 +46,10 @@ def ETG_Compare_Locations(Prefix1, Location1, Prefix2, Location2, TidePars):
 	  TidePars (dict) - Contains ETGTAB model parameters.
 	"""
 
-	model1 = ETG.EarthTidalGravity(Prefix1, Location=Location1, TidePars=TidePars)
+	model1 = EarthTidalGravity(Prefix1, Location=Location1, TidePars=TidePars)
 	model1.Read_CSV_File()
 
-	model2 = ETG.EarthTidalGravity(Prefix2, Location=Location2, TidePars=TidePars)
+	model2 = EarthTidalGravity(Prefix2, Location=Location2, TidePars=TidePars)
 	model2.Read_CSV_File()
 
 	nrows = 2
@@ -74,10 +77,10 @@ def ETG_Compare_Locations(Prefix1, Location1, Prefix2, Location2, TidePars):
 
 	plt.show()
 
-################ End of ETG_Compare_Locations() #################
+################## End of Compare_Locations() ###################
 #################################################################
 
-def ETG_Interpolate(Location, tList, ReExecute=False):
+def Interpolate(Location, tList, ReExecute=False):
 	"""Compute tidal gravity anomaly at specific times given by tList.
 	Here, ETGTAB is used to compute the veritical tidal gravity component on a grid with 300 s resolution.
 	Then an interpolant is used to predict values between these grid points at the times in tList.
@@ -104,7 +107,7 @@ def ETG_Interpolate(Location, tList, ReExecute=False):
 		'EarthModel':	'Elastic'				## 'Rigid', 'Elastic'
 	}
 
-	model = ETG.EarthTidalGravity('Temp', Location, TidePars)
+	model = EarthTidalGravity('Temp', Location, TidePars)
 	model.Run_ETGTAB(0, ReExecute=ReExecute)
 	model.Write_CSV_File()
 
@@ -120,10 +123,10 @@ def ETG_Interpolate(Location, tList, ReExecute=False):
 
 	return gTide
 
-################### End of ETG_Interpolate() ####################
+##################### End of Interpolate() ######################
 #################################################################
 
-def ETG_Interpolate_Example(Location):
+def Interpolate_Example(Location):
 	"""Example implementation of ETG_Interpolate."""
 
 	tz = pytz.timezone(Location['Timezone'])
@@ -141,7 +144,7 @@ def ETG_Interpolate_Example(Location):
 
 	tList = np.linspace(tStart, tStop, num=nData, endpoint=True)
 	dtList = [dt.datetime.fromtimestamp(tList[i], tz=pytz.timezone('UTC')) for i in range(nData)]
-	gTide = ETG_Interpolate(Location, tList, ReExecute=True)
+	gTide = Interpolate(Location, tList, ReExecute=True)
 
 	_, axs = plt.subplots(nrows=1, ncols=1, figsize=(8,3), sharex=True, constrained_layout=True)
 
@@ -151,11 +154,11 @@ def ETG_Interpolate_Example(Location):
 	axs.grid()
 	plt.show()
 
-################### End of ETG_Interpolate() ####################
+################# End of Interpolate_Example() ##################
 #################################################################
 
 if __name__ == '__main__':
-
+	
 	Location1 = {
 		'Latitude':  	45.9500,				## Latitude  (deg North)
 		'Longitude': 	66.6411,				## Longitude (deg East)
@@ -163,24 +166,6 @@ if __name__ == '__main__':
 		'Gravity': 		9.8067624,				## Local gravity (m/s^2)
 		'Timezone':		'Canada/Atlantic',		## Local timezone (e.g. 'Europe/Paris', 'Canada/Atlantic', 'UTC', see pytz.common_timezones)
 		'City':			'Fredericton, NB',		## City description
-	}
-
-	Location2 = {
-		'Latitude':  	45.3051,				## Latitude  (deg North)
-		'Longitude': 	66.0855,				## Longitude (deg East)
-		'Elevation': 	81.,					## Elevation above sea level (m)
-		'Gravity': 		9.8064168,				## Local gravity (m/s^2)
-		'Timezone':		'Canada/Atlantic',		## Local timezone (print pytz.common_timezones for examples)
-		'City':			'St. John, NB',			## City description
-	}
-
-	Location3 = {
-		'Latitude':  	43.7733,				## Latitude  (deg North)
-		'Longitude': 	79.5064,				## Longitude (deg East)
-		'Elevation': 	198.,					## Elevation above sea level (m)
-		'Gravity': 		9.8041740,				## Local gravity (m/s^2)
-		'Timezone':		'Canada/Atlantic',		## Local timezone (print pytz.common_timezones for examples)
-		'City':			'Toronto, ON',			## City description
 	}
 
 	## Allowed tidal components:
@@ -197,10 +182,4 @@ if __name__ == '__main__':
 		'EarthModel':	'Elastic'				## 'Rigid', 'Elastic'
 	}
 
-	ETG_Time_Series('UNB_FR', Location1, TidePars)
-	# ETG_Time_Series('UNB_SJ', Location2, TidePars)
-	# ETG_Time_Series('YorkU', Location3, TidePars)
-
-	# ETG_Compare_Locations('UNB_FR', Location1, 'UNB_SJ', Location2, TidePars)
-
-	# ETG_Interpolate_Example(Location1)
+	Time_Series('UNB_FR', Location1, TidePars)
